@@ -29,11 +29,17 @@ I myself put mine on termux's home directory: `~/void`
 
 ```sh
 mkdir void
+```
+```sh
 cd void
+````
+```sh
 # Change void-rootfs.tar.xz into  the path of your rootfs
 tar xpvf void-rootfs.tar.xz --numeric-owner
 # TODO: add an explanation on the flags used in the command
+```
 
+```sh
 # Optional - add sdcard mountpoint
 mkdir -p mnt/sdcard
 ```
