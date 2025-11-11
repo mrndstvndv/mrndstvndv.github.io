@@ -1,4 +1,4 @@
-# How to run voidlinux on termux using chroot
+# How to run voidlinux on termux using chroot 🚧 IN PROGRESS 🚧
 
 ## Requirements
 
