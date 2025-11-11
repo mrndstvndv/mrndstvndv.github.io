@@ -3,7 +3,7 @@
 ## Requirements
 
 - root
-- busybox (Mahisk and KernelSU ships with a feature complete binary so you wont need to install this one if your using them as root solutions)
+- busybox ([Magisk](https://github.com/topjohnwu/Magisk) and [KernelSU](https://kernelsu.org) ships with a feature complete binary so you wont need to install this one if your using them as root solutions)
 
 ## Download the rootfs tarball from the voidlinux site
 https://voidlinux.org/download/
