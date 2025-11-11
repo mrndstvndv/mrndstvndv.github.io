@@ -6,9 +6,9 @@
 - busybox
 [Magisk](https://github.com/topjohnwu/Magisk) and [KernelSU](https://kernelsu.org) ships with a feature complete binary so you wont need to install this one if your using them as root solutions
 
-### Busybox binary locations for KernelSU and Magisk
-magisk: `/data/adb/magisk/busybox`
-kernelsu: `/data/adb/ksu/bin`
+**Busybox binary locations for KernelSU and Magisk**
+- magisk: `/data/adb/magisk/busybox`
+- kernelsu: `/data/adb/ksu/bin`
 
 ## Getting the rootfs
 
