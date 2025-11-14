@@ -90,6 +90,20 @@ busybox umount $ROOTFS/dev
 busybox umount $ROOTFS/mnt/sdcard # Remove this line if you did not make the sdcard mountpoint
 ```
 
+# Backing up your rootfs
+
+```sh
+sudo tar -czpf ~/void-backup.tar.gz -C [extracted-rootfs-dir] \
+    --exclude=./tmp/* \
+    --exclude=./proc/* \
+    --exclude=./sys/* \
+    --exclude=./dev/* \
+    --exclude=./run/* \
+    --one-file-system \
+    .
+```
+
+
 ## References
 [1]: https://github.com/jorggonz2016/Chroot-on-termux?tab=readme-ov-file#extracting-the-rootfs
 [2]: [Root] Install Ubuntu in chroot on Android without Linux Deploy - https://ivonblog.com/en-us/posts/termux-chroot-ubuntu/
