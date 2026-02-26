@@ -1,5 +1,6 @@
 # Blogs
 - [How to run voidlinux on termux using chroot](https://mrndstvndv.github.io/blogs/run-void-on-termux)
+- Running Determinate Nix on termux chroot
 
 # Projects
 - [Magisk Font Maker](https://mrndstvndv.github.io/font-mod/) - Create magisk module to override system fonts with your own custom one.
