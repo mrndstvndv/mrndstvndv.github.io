@@ -1,3 +1,20 @@
+:root {
+  color-scheme: light dark;
+  --bg: #fff;
+  --text: #222;
+  --link: #0366d6;
+  --link-visited: #6f42c1;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111;
+    --text: #eee;
+    --link: #58a6ff;
+    --link-visited: #bc8cff;
+  }
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
   font-family: system-ui, sans-serif;
@@ -5,9 +22,12 @@ body {
   margin: 0 auto;
   padding: 2rem 1rem;
   line-height: 1.6;
+  background: var(--bg);
+  color: var(--text);
 }
 h1 { margin-top: 2rem; margin-bottom: 0.5rem; }
 ul { padding-left: 1.5rem; }
 li { margin-bottom: 0.5rem; }
-a { color: #0366d6; text-decoration: none; }
+a { color: var(--link); text-decoration: none; }
 a:hover { text-decoration: underline; }
+a:visited { color: var(--link-visited); }
