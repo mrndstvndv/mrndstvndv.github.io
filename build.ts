@@ -1,8 +1,6 @@
 import { readdir, mkdir } from 'fs/promises';
 import { build, write } from 'bun';
-import { loadWasm, createOnigurumaEngine } from '@shikijs/engine-oniguruma';
-import wasm from 'shiki/wasm';
-import { createHighlighter } from 'shiki';
+import { docWrapper, initHighlighter, renderMarkdown } from './src/utils';
 
 // Build JS/CSS entrypoints
 await build({
@@ -14,42 +12,10 @@ await build({
 // Copy root index.html
 await write('./dist/index.html', Bun.file('./index.html'));
 
-// Copy font file
-await write('./dist/GeistPixel-Square.woff2', Bun.file('./GeistPixel-Square.woff2'));
-
 // Build blog pages from markdown
 await mkdir('./dist/blogs', { recursive: true });
 
-const docWrapper = (title: string, body: string) => `<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${title}</title>
-  <link rel="stylesheet" href="/index.css">
-</head>
-<body>${body}</body>
-</html>`;
-
-await loadWasm(wasm);
-
-const highlighter = await createHighlighter({
-	themes: ['github-light', 'github-dark'],
-	langs: ['bash', 'sh', 'shell', 'js', 'ts', 'html', 'css', 'json', 'yaml', 'plaintext'],
-	engine: createOnigurumaEngine(),
-});
-
-const renderMarkdown = (markdown: string) =>
-	Bun.markdown.render(markdown, {
-		heading: (children, { level }) => `<h${level}>${children}</h${level}>`,
-		code: (children, meta) => {
-			const lang = meta?.language ?? 'plaintext';
-			return highlighter.codeToHtml(children, {
-				lang,
-				themes: { light: 'github-light', dark: 'github-dark' },
-			});
-		},
-	});
+const highlighter = await initHighlighter();
 
 for (const entry of await readdir('./blogs')) {
 	if (!entry.endsWith('.md')) continue;
@@ -58,6 +24,6 @@ for (const entry of await readdir('./blogs')) {
 	const title = md.split('\n')[0]?.replace(/^#+\s*/, '') ?? slug;
 	await write(
 		`./dist/blogs/${slug}.html`,
-		docWrapper(title, renderMarkdown(md)),
+		docWrapper(title, renderMarkdown(md, highlighter)),
 	);
 }
