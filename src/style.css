@@ -130,6 +130,12 @@ code {
   font-size: 0.875em;
 }
 
+.inline-code {
+  background: color-mix(in srgb, var(--text) 10%, var(--bg));
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+}
+
 /* Code blocks */
 pre.shiki {
   overflow-x: auto;

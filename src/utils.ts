@@ -26,6 +26,7 @@ export const initHighlighter = async (): Promise<Highlighter> => {
 export const renderMarkdown = (markdown: string, highlighter: Highlighter) =>
 	Bun.markdown.render(markdown, {
 		heading: (children, { level }) => `<h${level}>${children}</h${level}>`,
+		codespan: (children) => `<code class="inline-code">${children}</code>`,
 		code: (children, meta) => {
 			const lang = meta?.language ?? 'plaintext';
 			return highlighter.codeToHtml(children, {
@@ -33,6 +34,15 @@ export const renderMarkdown = (markdown: string, highlighter: Highlighter) =>
 				themes: { light: 'github-light', dark: 'github-dark' },
 			});
 		},
-		link: (children, { href }) => `<a href="${href}">${children}</a>`,
-		emphasis: (children) => `<em>${children}</em>`
+		link: (children, { href }) => `<a href="${href}">${children} </a>`,
+		emphasis: (children) => `<em>${children}</em>`,
+		list: (children, { ordered }) => {
+			if (ordered) {
+				return `<ol>${children}</ol>`
+			} else {
+				return `<ul>${children}</ul>`
+			}
+		},
+		listItem: (children) => `<li>${children}</li>`,
+		strong: (children) => `<strong>${children}</strong>`,
 	});
