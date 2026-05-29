@@ -23,26 +23,27 @@ export const initHighlighter = async (): Promise<Highlighter> => {
 	});
 };
 
-export const renderMarkdown = (markdown: string, highlighter: Highlighter) =>
-	Bun.markdown.render(markdown, {
-		heading: (children, { level }) => `<h${level}>${children}</h${level}>`,
-		codespan: (children) => `<code class="inline-code">${children}</code>`,
-		code: (children, meta) => {
-			const lang = meta?.language ?? 'plaintext';
-			return highlighter.codeToHtml(children, {
-				lang,
-				themes: { light: 'github-light', dark: 'github-dark' },
-			});
-		},
-		link: (children, { href }) => `<a href="${href}">${children} </a>`,
-		emphasis: (children) => `<em>${children}</em>`,
-		list: (children, { ordered }) => {
-			if (ordered) {
-				return `<ol>${children}</ol>`
-			} else {
-				return `<ul>${children}</ul>`
-			}
-		},
-		listItem: (children) => `<li>${children}</li>`,
-		strong: (children) => `<strong>${children}</strong>`,
-	});
+const decodeHtml = (s: string) =>
+	s.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/&quot;/g, '"');
+
+const codeBlockRe = /<pre><code(?: class="language-(\w+)")?>([\s\S]*?)<\/code><\/pre>/g;
+
+/** Match either a <pre><code> block (left as-is) or a standalone <code> (add class). */
+const inlineCodeRe = /(<pre><code[^>]*>[\s\S]*?<\/code><\/pre>)|<code>/g;
+
+export const renderMarkdown = (markdown: string, highlighter: Highlighter) => {
+	const html = Bun.markdown.html(markdown);
+
+	// Add inline-code class to all <code> elements not inside <pre><code>
+	const withInlineCode = html.replace(inlineCodeRe, (match, preBlock) =>
+		preBlock ?? '<code class="inline-code">',
+	);
+
+	// Syntax-highlight fenced code blocks
+	return withInlineCode.replace(codeBlockRe, (_, lang, code) =>
+		highlighter.codeToHtml(decodeHtml(code), {
+			lang: lang ?? 'plaintext',
+			themes: { light: 'github-light', dark: 'github-dark' },
+		}),
+	);
+};

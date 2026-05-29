@@ -145,6 +145,7 @@ pre.shiki {
   font-family: var(--font-mono);
   font-size: 0.9rem;
   margin-top: 1rem;
+  background: color-mix(in srgb, var(--text) 10%, var(--bg)) !important;
 }
 
 /* Links */
@@ -155,9 +156,6 @@ a:visited { color: var(--link-visited); }
 
 
 @media (prefers-color-scheme: dark) {
-  pre.shiki {
-    background-color: var(--shiki-dark-bg) !important;
-  }
   pre.shiki :where(span) {
     color: var(--shiki-dark) !important;
   }
