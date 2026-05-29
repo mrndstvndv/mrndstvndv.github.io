@@ -61,6 +61,7 @@ export const renderMarkdown = (markdown: string, highlighter: Highlighter) => {
 			return `<h${level} id="${id}">${children}</h${level}>`;
 		},
 		paragraph: (children) => `<p>${children}</p>`,
+		blockquote: (children) => `<blockquote>${children}</blockquote>`,
 		codespan: (children) => `<code class="inline-code">${children}</code>`,
 		code: (children, meta) => {
 			const lang = meta?.language ?? 'plaintext';

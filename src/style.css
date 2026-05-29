@@ -136,6 +136,14 @@ code {
   border-radius: 4px;
 }
 
+/* Blockquotes */
+blockquote {
+  margin: 1rem 0;
+  padding: 0.25rem 1rem;
+  border-left: 3px solid color-mix(in srgb, var(--text) 30%, var(--bg));
+  color: color-mix(in srgb, var(--text) 70%, var(--bg));
+}
+
 /* Code blocks */
 pre.shiki {
   overflow-x: auto;
@@ -223,4 +231,11 @@ html {
   pre.shiki :where(span) {
     color: var(--shiki-dark) !important;
   }
+}
+
+header {
+  opacity: 0.75;
+  border: 1px solid color-mix(in srgb, var(--text) 20%, var(--bg));
+  border-radius: 8px;
+  padding: 0.75rem;
 }
