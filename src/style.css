@@ -153,7 +153,77 @@ a { color: var(--link); text-decoration: none; }
 a:hover { text-decoration: underline; }
 a:visited { color: var(--link-visited); }
 
+/* Table of contents — fixed bottom-right */
+.page-toc {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 100;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
 
+.page-toc-toggle {
+  background: color-mix(in srgb, var(--text) 10%, var(--bg));
+  border: 1px solid color-mix(in srgb, var(--text) 20%, var(--bg));
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  font-size: inherit;
+  color: var(--text);
+  order: 1;
+}
+
+.page-toc-content {
+  display: none;
+  max-width: 18rem;
+  max-height: 60vh;
+  overflow-y: auto;
+  background: var(--bg);
+  border: 1px solid color-mix(in srgb, var(--text) 20%, var(--bg));
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-bottom: 0.25rem;
+  order: 0;
+}
+
+#toc-toggle:checked ~ .page-toc-content {
+  display: block;
+}
+
+/* Keep visible while cursor is moving from toggle into the panel */
+.page-toc-content:hover {
+  display: block;
+}
+
+.page-toc-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--text) 15%, var(--bg));
+}
+
+.page-toc a {
+  display: block;
+  text-decoration: none;
+  color: var(--text);
+  opacity: 0.75;
+  border-radius: 3px;
+  padding: 0.1rem 0.25rem;
+  transition: opacity 0.15s, background 0.15s;
+}
+
+.page-toc a:hover {
+  opacity: 1;
+  background: color-mix(in srgb, var(--text) 8%, var(--bg));
+}
+
+html {
+  scroll-behavior: smooth;
+}
 
 @media (prefers-color-scheme: dark) {
   pre.shiki :where(span) {

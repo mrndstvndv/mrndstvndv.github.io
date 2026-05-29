@@ -23,27 +23,128 @@ export const initHighlighter = async (): Promise<Highlighter> => {
 	});
 };
 
-const decodeHtml = (s: string) =>
-	s.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/&quot;/g, '"');
+const slugify = (s: string) =>
+	s
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/^-|-$/g, '');
 
-const codeBlockRe = /<pre><code(?: class="language-(\w+)")?>([\s\S]*?)<\/code><\/pre>/g;
+interface TocEntry {
+	level: number;
+	text: string;
+	id: string;
+}
 
-/** Match either a <pre><code> block (left as-is) or a standalone <code> (add class). */
-const inlineCodeRe = /(<pre><code[^>]*>[\s\S]*?<\/code><\/pre>)|<code>/g;
+/**
+ * Walk HTML char-by-char. At depth 0 (top level), accumulate text + inline tags
+ * into a buffer. When a block element opens, flush the buffer as `<p>...</p>`.
+ * Inside blocks (depth > 0), output everything directly.
+ */
+function wrapParagraphs(html: string): string {
+	let out = '';
+	let buf = '';
+	let depth = 0;
+	let i = 0;
+
+	while (i < html.length) {
+		if (html[i] === '<') {
+			const close = html.indexOf('>', i);
+			if (close === -1) break;
+			const tag = html.slice(i, close + 1);
+
+			const isClosing = tag[1] === '/';
+			const tagName = isClosing
+				? tag.slice(2, tag.indexOf('>')).split(/\s/)[0]
+				: tag.slice(1).split(/[\s>]/)[0];
+			const isBlock = /^h[1-6]$|^[uo]l$|^li$|^pre$|^blockquote$|^p$/.test(tagName);
+
+			if (isBlock && !isClosing && depth === 0) {
+				// Flush paragraph buffer before entering block
+				if (buf.trim()) {
+					out += `<p>${buf.trim()}</p>`;
+					buf = '';
+				} else {
+					buf = '';
+				}
+				depth++;
+				out += tag;
+			} else if (isBlock && isClosing) {
+				depth = Math.max(0, depth - 1);
+				out += tag;
+			} else if (isBlock && !isClosing && depth > 0) {
+				depth++;
+				out += tag;
+			} else if (depth === 0) {
+				// Inline tag at top level — part of the paragraph buffer
+				buf += tag;
+			} else {
+				out += tag;
+			}
+
+			i = close + 1;
+		} else {
+			if (depth === 0) {
+				buf += html[i];
+			} else {
+				out += html[i];
+			}
+			i++;
+		}
+	}
+
+	// Flush remaining buffer
+	if (buf.trim()) {
+		out += `<p>${buf.trim()}</p>`;
+	} else {
+		out += buf;
+	}
+
+	return out;
+}
+
+function buildTocNav(toc: TocEntry[]): string {
+	let html = '<nav class="page-toc">\n';
+	html += '  <input type="checkbox" id="toc-toggle" hidden>\n';
+	html += '  <label for="toc-toggle" class="page-toc-toggle">☰</label>\n';
+	html += '  <div class="page-toc-content">\n';
+	html += '    <div class="page-toc-title">Contents</div>\n';
+	for (const entry of toc) {
+		const indent = (entry.level - 1) * 1.25;
+		html += `    <a href="#${entry.id}" style="padding-left:${indent}rem">${entry.text}</a>\n`;
+	}
+	html += '  </div>\n';
+	html += '</nav>\n';
+	return html;
+}
 
 export const renderMarkdown = (markdown: string, highlighter: Highlighter) => {
-	const html = Bun.markdown.html(markdown);
+	const toc: TocEntry[] = [];
 
-	// Add inline-code class to all <code> elements not inside <pre><code>
-	const withInlineCode = html.replace(inlineCodeRe, (match, preBlock) =>
-		preBlock ?? '<code class="inline-code">',
-	);
+	let html = Bun.markdown.render(markdown, {
+		heading: (children, { level }) => {
+			const id = slugify(children);
+			toc.push({ level, text: children, id });
+			return `<h${level} id="${id}">${children}</h${level}>`;
+		},
+		codespan: (children) => `<code class="inline-code">${children}</code>`,
+		code: (children, meta) => {
+			const lang = meta?.language ?? 'plaintext';
+			return highlighter.codeToHtml(children, {
+				lang,
+				themes: { light: 'github-light', dark: 'github-dark' },
+			});
+		},
+		link: (children, { href }) => `<a href="${href}">${children}</a>`,
+		emphasis: (children) => `<em>${children}</em>`,
+		list: (children, { ordered }) =>
+			ordered ? `<ol>${children}</ol>` : `<ul>${children}</ul>`,
+		listItem: (children) => `<li>${children}</li>`,
+		strong: (children) => `<strong>${children}</strong>`,
+	});
 
-	// Syntax-highlight fenced code blocks
-	return withInlineCode.replace(codeBlockRe, (_, lang, code) =>
-		highlighter.codeToHtml(decodeHtml(code), {
-			lang: lang ?? 'plaintext',
-			themes: { light: 'github-light', dark: 'github-dark' },
-		}),
-	);
+	html = wrapParagraphs(html);
+
+	const tocHtml = toc.length > 1 ? buildTocNav(toc) : '';
+
+	return tocHtml + html;
 };
