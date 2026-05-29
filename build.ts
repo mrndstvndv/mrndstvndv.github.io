@@ -1,5 +1,6 @@
 import { readdir, mkdir } from 'fs/promises';
 import { build, write } from 'bun';
+import { createHighlighter } from 'shiki';
 
 // Build JS/CSS entrypoints
 await build({
@@ -25,10 +26,22 @@ const docWrapper = (title: string, body: string) => `<!doctype html>
 <body>${body}</body>
 </html>`;
 
-const renderMarkdown = (markdown: string | ArrayBufferLike) => Bun.markdown.render(markdown, {
-	heading: (children, { level }) => `<h${level}>${children}</h${level}>`
-})
+const highlighter = await createHighlighter({
+	themes: ['github-light', 'github-dark'],
+	langs: ['bash', 'sh', 'shell', 'js', 'ts', 'html', 'css', 'json', 'yaml', 'plaintext'],
+});
 
+const renderMarkdown = (markdown: string) =>
+	Bun.markdown.render(markdown, {
+		heading: (children, { level }) => `<h${level}>${children}</h${level}>`,
+		code: (children, meta) => {
+			const lang = meta?.language ?? 'plaintext';
+			return highlighter.codeToHtml(children, {
+				lang,
+				themes: { light: 'github-light', dark: 'github-dark' },
+			});
+		},
+	});
 
 for (const entry of await readdir('./blogs')) {
 	if (!entry.endsWith('.md')) continue;

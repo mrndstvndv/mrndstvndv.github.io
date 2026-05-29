@@ -9,5 +9,8 @@
     "build": "bun run build.ts",
     "dev": "bun run dev.ts"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "shiki": "^4.1.0"
+  }
 }

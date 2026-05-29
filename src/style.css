@@ -31,3 +31,19 @@ li { margin-bottom: 0.5rem; }
 a { color: var(--link); text-decoration: none; }
 a:hover { text-decoration: underline; }
 a:visited { color: var(--link-visited); }
+
+pre.shiki {
+  overflow-x: auto;
+  padding: 1rem;
+  border-radius: 6px;
+  line-height: 1.45;
+}
+
+@media (prefers-color-scheme: dark) {
+  pre.shiki {
+    background-color: var(--shiki-dark-bg) !important;
+  }
+  pre.shiki :where(span) {
+    color: var(--shiki-dark) !important;
+  }
+}
