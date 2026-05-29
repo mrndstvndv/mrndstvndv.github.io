@@ -1,4 +1,4 @@
-import { mkdir } from 'fs/promises';
+import { readdir, mkdir } from 'fs/promises';
 import { build, write } from 'bun';
 
 // Build JS/CSS entrypoints
@@ -11,14 +11,32 @@ await build({
 // Copy root index.html
 await write('./dist/index.html', Bun.file('./index.html'));
 
+// Build blog pages from markdown
 await mkdir('./dist/blogs', { recursive: true });
-await write(
-	'./dist/blogs/run-void-on-termux.html',
-	renderMarkdown(await Bun.file('./blogs/run-void-on-termux.md').text()),
-);
 
-function renderMarkdown(markdown: string | ArrayBufferLike): string {
-	return Bun.markdown.render(markdown, {
-		heading: (children, { level }) => `<h${level}>${children}</h${level}>`
-	})
+const docWrapper = (title: string, body: string) => `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${title}</title>
+  <link rel="stylesheet" href="/index.css">
+</head>
+<body>${body}</body>
+</html>`;
+
+const renderMarkdown = (markdown: string | ArrayBufferLike) => Bun.markdown.render(markdown, {
+	heading: (children, { level }) => `<h${level}>${children}</h${level}>`
+})
+
+
+for (const entry of await readdir('./blogs')) {
+	if (!entry.endsWith('.md')) continue;
+	const slug = entry.slice(0, -3);
+	const md = await Bun.file(`./blogs/${entry}`).text();
+	const title = md.split('\n')[0]?.replace(/^#+\s*/, '') ?? slug;
+	await write(
+		`./dist/blogs/${slug}.html`,
+		docWrapper(title, renderMarkdown(md)),
+	);
 }
