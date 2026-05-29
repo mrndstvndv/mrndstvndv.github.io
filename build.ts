@@ -1,5 +1,7 @@
 import { readdir, mkdir } from 'fs/promises';
 import { build, write } from 'bun';
+import { loadWasm, createOnigurumaEngine } from '@shikijs/engine-oniguruma';
+import wasm from 'shiki/wasm';
 import { createHighlighter } from 'shiki';
 
 // Build JS/CSS entrypoints
@@ -11,6 +13,9 @@ await build({
 
 // Copy root index.html
 await write('./dist/index.html', Bun.file('./index.html'));
+
+// Copy font file
+await write('./dist/GeistPixel-Square.woff2', Bun.file('./GeistPixel-Square.woff2'));
 
 // Build blog pages from markdown
 await mkdir('./dist/blogs', { recursive: true });
@@ -26,9 +31,12 @@ const docWrapper = (title: string, body: string) => `<!doctype html>
 <body>${body}</body>
 </html>`;
 
+await loadWasm(wasm);
+
 const highlighter = await createHighlighter({
 	themes: ['github-light', 'github-dark'],
 	langs: ['bash', 'sh', 'shell', 'js', 'ts', 'html', 'css', 'json', 'yaml', 'plaintext'],
+	engine: createOnigurumaEngine(),
 });
 
 const renderMarkdown = (markdown: string) =>
