@@ -60,6 +60,7 @@ export const renderMarkdown = (markdown: string, highlighter: Highlighter) => {
 			toc.push({ level, text: children, id });
 			return `<h${level} id="${id}">${children}</h${level}>`;
 		},
+		paragraph: (children) => `<p>${children}</p>`,
 		codespan: (children) => `<code class="inline-code">${children}</code>`,
 		code: (children, meta) => {
 			const lang = meta?.language ?? 'plaintext';
