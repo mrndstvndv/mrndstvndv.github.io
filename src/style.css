@@ -199,13 +199,6 @@ a:visited { color: var(--link-visited); }
   display: block;
 }
 
-.page-toc-title {
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  padding-bottom: 0.25rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--text) 15%, var(--bg));
-}
-
 .page-toc a {
   display: block;
   text-decoration: none;
