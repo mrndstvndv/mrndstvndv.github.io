@@ -1,15 +1,12 @@
 {
   "name": "mrndstvndv.github.io",
   "module": "index.ts",
-  "scripts": {
-    "build": "bun run index.ts"
-  },
-  "type": "module",
-  "private": true,
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
   "peerDependencies": {
     "typescript": "^5"
-  }
+  },
+  "private": true,
+  "scripts": {
+    "build": "bun run build.ts"
+  },
+  "type": "module"
 }
