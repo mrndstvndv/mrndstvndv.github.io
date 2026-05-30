@@ -265,13 +265,14 @@ main {
 @media (max-width: 640px) {
 	main {
 		flex-direction: column;
-		align-items: flex-start;
+		align-items: center;
+		text-align: center;
 		gap: 0.75rem;
 	}
 
 	main img {
-		width: 6rem !important;
-		height: 6rem !important;
+		width: 9rem !important;
+		height: 9rem !important;
 	}
 }
 
