@@ -11,7 +11,17 @@ export const docWrapper = (title: string, body: string) => `<!doctype html>
   <link rel="stylesheet" href="/index.css">
   <script src="/index.js"></script>
 </head>
-<body>${body}</body>
+<body>
+<header style="padding-top: 1rem;">
+	<a style="cursor: pointer; text-decoration: none;" href="/">
+		<p><strong>{ Steven Dave T. Miranda }</strong></p>
+		<p style="padding: 0; margin: 0; font-size: var(--text-sm);">
+			<em>Android Dev • Web Dev • Linux </em>
+		</p>
+	</a>
+</header>
+${body}
+</body>
 </html>`;
 
 export const initHighlighter = async (): Promise<Highlighter> => {
