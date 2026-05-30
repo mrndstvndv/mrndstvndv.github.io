@@ -162,7 +162,6 @@ code {
 .inline-code {
 	background: color-mix(in srgb, var(--text) 10%, var(--bg));
 	padding: 0.15em 0.4em;
-	border-radius: 4px;
 }
 
 /* Blockquotes */
@@ -177,7 +176,6 @@ blockquote {
 pre.shiki {
 	overflow-x: auto;
 	padding: 1rem;
-	border-radius: 6px;
 	line-height: 1.55;
 	font-family: var(--font-mono);
 	font-size: 0.9rem;
@@ -215,7 +213,6 @@ a:visited {
 .page-toc-toggle {
 	background: color-mix(in srgb, var(--text) 10%, var(--bg));
 	border: 1px solid color-mix(in srgb, var(--text) 20%, var(--bg));
-	border-radius: 6px;
 	padding: 0.25rem 0.5rem;
 	cursor: pointer;
 	font-size: inherit;
@@ -231,7 +228,6 @@ a:visited {
 	background: color-mix(in srgb, var(--bg) 60%, transparent);
 	backdrop-filter: blur(8px);
 	border: 1px solid color-mix(in srgb, var(--text) 20%, var(--bg));
-	border-radius: 8px;
 	padding: 0.75rem;
 	margin-bottom: 0.25rem;
 	order: 0;
