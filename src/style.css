@@ -272,7 +272,15 @@ header p {
 	margin: 0;
 }
 
+main p {
+	padding: 0;
+	margin: 0;
+}
+
 header {
+	display: flex;
+	gap: 1rem;
+
 	a {
 		color: var(--text);
 		text-decoration: none;
@@ -284,5 +292,10 @@ header {
 
 	a:visited {
 		color: var(--text);
+	}
+
+	img {
+		transition: transform 0.2s ease, box-shadow 0.2s ease;
+		cursor: pointer;
 	}
 }

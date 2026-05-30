@@ -13,6 +13,9 @@ export const docWrapper = (title: string, body: string) => `<!doctype html>
 </head>
 <body>
 <header style="padding-top: 1rem;">
+<img src="/assets/DAY20_00147.JPG" alt="Profile"
+				style="width: 3rem; height: 3rem; border-radius: 4px; object-fit: cover;" />
+
 	<a style="cursor: pointer; text-decoration: none;" href="/">
 		<p><strong>{ Steven Dave T. Miranda }</strong></p>
 		<p style="padding: 0; margin: 0; font-size: var(--text-sm);">

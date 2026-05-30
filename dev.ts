@@ -1,7 +1,15 @@
 import { watch } from "fs";
 import { serve, file, spawn, type ServerWebSocket } from "bun";
 
-const BASE_PORT = parseInt(process.env.PORT || "3000", 10);
+let HOST = process.env.HOST || "localhost";
+let BASE_PORT = parseInt(process.env.PORT || "3000", 10);
+
+for (let i = 2; i < process.argv.length; i++) {
+  const arg = process.argv[i];
+  if (arg === "--host" && i + 1 < process.argv.length) {
+    HOST = process.argv[++i];
+  }
+}
 const DIST = "./dist";
 const SRC = "./src";
 const BLOGS = "./blogs";
@@ -77,6 +85,7 @@ function injectReload(html: string): string {
 
 function startServer(port: number) {
   const server = serve({
+    hostname: HOST,
     port,
     websocket: {
       open(ws) {
@@ -112,7 +121,7 @@ function startServer(port: number) {
     },
   });
 
-  console.log(`  dev server at http://localhost:${port}`);
+  console.log(`  dev server at http://${HOST}:${port}`);
 
   process.on("SIGINT", () => {
     buildProc?.kill();
