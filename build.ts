@@ -12,7 +12,7 @@ await build({
 // Copy root index.html
 await write('./dist/index.html', Bun.file('./index.html'));
 
-// Copy profile picture
+// Copy static assets
 await write('./dist/assets/DAY20_00147.JPG', Bun.file('./assets/DAY20_00147.JPG'));
 
 // Build blog pages from markdown
