@@ -173,7 +173,15 @@ li {
 	color: var(--link);
 }
 
+.repo-badge.topic {
+	background: color-mix(in srgb, var(--text) 8%, var(--bg));
+	border: 1px solid color-mix(in srgb, var(--text) 20%, var(--bg));
+}
 
+.repo-list {
+	list-style: none;
+	padding-left: 0;
+}
 
 li>ul,
 li>ol {
