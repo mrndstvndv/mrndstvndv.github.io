@@ -26,7 +26,7 @@ export async function fetchRepoStats(repo: string): Promise<RepoStats | null> {
 
 export function renderStats(stats: RepoStats): string {
 	let html = '';
-	if (stats.stars > 0) html += `<span class="repo-badge">★ ${stats.stars}</span> `;
+	if (stats.stars >= 0) html += `<span class="repo-badge">★ ${stats.stars}</span> `;
 	if (stats.language) html += `<span class="repo-badge lang">${stats.language}</span> `;
 	for (const topic of stats.topics) {
 		html += `<span class="repo-badge topic">${topic}</span> `;

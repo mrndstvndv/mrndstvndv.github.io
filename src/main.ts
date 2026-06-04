@@ -11,16 +11,25 @@ document.addEventListener('click', (e) => {
 
 // Live GitHub stats for featured projects
 async function loadRepoStats() {
-	const items = document.querySelectorAll<HTMLLIElement>('[data-repo]');
+	const items = document.querySelectorAll<HTMLElement>('[data-repo]');
 	if (!items.length) return;
 
-	const fetches = [...items].map(async (li) => {
-		const repo = li.dataset.repo;
-		const meta = li.querySelector<HTMLDivElement>('.repo-meta');
+	const fetches = [...items].map(async (card) => {
+		const repo = card.dataset.repo;
+		const meta = card.querySelector<HTMLDivElement>('.repo-meta');
 		if (!repo || !meta) return;
 
 		const stats = await fetchRepoStats(repo);
-		if (stats) meta.innerHTML = renderStats(stats);
+		if (stats) {
+			// Fallback to HTML topics if GitHub repo has no topics defined
+			if (stats.topics.length === 0) {
+				const htmlTopics = Array.from(card.querySelectorAll('.repo-badge.topic'))
+					.map((el) => el.textContent || '')
+					.filter(Boolean);
+				stats.topics = htmlTopics;
+			}
+			meta.innerHTML = renderStats(stats);
+		}
 	});
 
 	await Promise.all(fetches);

@@ -13,7 +13,10 @@ await build({
 await write('./dist/index.html', Bun.file('./index.html'));
 
 // Copy static assets
-await write('./dist/assets/DAY20_00147.JPG', Bun.file('./assets/DAY20_00147.JPG'));
+await mkdir('./dist/assets', { recursive: true });
+for (const asset of await readdir('./assets')) {
+	await write(`./dist/assets/${asset}`, Bun.file(`./assets/${asset}`));
+}
 
 // Build blog pages from markdown
 await mkdir('./dist/blogs', { recursive: true });
