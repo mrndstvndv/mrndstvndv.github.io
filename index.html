@@ -4,20 +4,27 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>mrndstvndv</title>
+	<title>mrndstvndv | Steven Dave T. Miranda</title>
 	<link rel="stylesheet" href="index.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-	<main style="padding: 1rem 0; margin: 0;">
-		<div><img src="assets/DAY20_00147.JPG" alt="Profile"
-				style="width: 14rem; height: 14rem; border-radius: 4px; object-fit: cover;" />
+	<header class="hero-header">
+		<div class="profile-container">
+			<img src="assets/DAY20_00147.JPG" alt="Steven Dave T. Miranda Profile" class="profile-img" />
 		</div>
-		<div>
-			<p style="font-size: var(--text-xl);"><strong>{ Steven Dave T. Miranda }</strong></p>
-			<p style="padding: 0; margin: 0; font-size: var(--text-lg);">
-				<em>Android Dev • Web Dev • Linux </em>
+		<div class="profile-details">
+			<h1 class="profile-name">
+				<span class="bracket">{</span> Steven Dave T. Miranda <span class="bracket">}</span>
+			</h1>
+			<p class="profile-title">Android Dev &bull; Web Dev &bull; Linux</p>
+			<p class="profile-bio">
+				Building performance-focused system tools, custom terminal integrations, and modern web applications.
+				Focused on low-level Android configurations, shell scripting, and minimal development setups.
 			</p>
 			<div class="social-links">
 				<a href="https://github.com/mrndstvndv" target="_blank" rel="noopener" aria-label="GitHub">
@@ -37,72 +44,111 @@
 				</a>
 			</div>
 		</div>
+	</header>
+
+	<main class="content-wrapper">
+		<section class="section projects-section">
+			<h2 class="section-title">Projects</h2>
+			<div class="projects-grid">
+				<article class="project-card" data-repo="mrndstvndv/Search">
+					<div class="card-screenshot">
+						<img src="assets/search_app.png" alt="Search Android App Mockup" loading="lazy" />
+					</div>
+					<div class="card-body">
+						<h3 class="card-title"><a href="https://github.com/mrndstvndv/Search">OmniPrompt</a></h3>
+						<p class="card-desc">Android command palette that unifies app launching, device search, and system utilities into a single, customizable overlay.</p>
+						<div class="repo-meta">
+							<span class="repo-badge lang">Kotlin</span>
+							<span class="repo-badge topic">android</span>
+							<span class="repo-badge topic">search</span>
+							<span class="repo-badge topic">command-palette</span>
+						</div>
+					</div>
+				</article>
+
+				<article class="project-card" data-repo="mrndstvndv/termux-ghostty">
+					<div class="card-body">
+						<h3 class="card-title"><a href="https://github.com/mrndstvndv/termux-ghostty">termux-ghostty</a></h3>
+						<p class="card-desc">An experimental Android terminal app combining features from Termux and Ghostty.</p>
+						<div class="repo-meta">
+							<span class="repo-badge lang">Zig</span>
+							<span class="repo-badge topic">android</span>
+							<span class="repo-badge topic">terminal</span>
+							<span class="repo-badge topic">ghostty</span>
+						</div>
+					</div>
+				</article>
+
+				<article class="project-card" data-repo="mrndstvndv/font-mod">
+					<div class="card-body">
+						<h3 class="card-title"><a href="https://mrndstvndv.github.io/font-mod/">Magisk Font Maker</a></h3>
+						<p class="card-desc">Create magisk module to override system fonts with your own custom one.</p>
+						<div class="repo-meta">
+							<span class="repo-badge lang">Shell</span>
+							<span class="repo-badge topic">android</span>
+							<span class="repo-badge topic">magisk</span>
+							<span class="repo-badge topic">font</span>
+						</div>
+					</div>
+				</article>
+
+				<article class="project-card" data-repo="mrndstvndv/runpulse">
+					<div class="card-body">
+						<h3 class="card-title"><a href="https://mrndstvndv.github.io/runpulse/">Runpulse</a></h3>
+						<p class="card-desc">Simple interval timer for my jogs</p>
+						<div class="repo-meta">
+							<span class="repo-badge lang">JavaScript</span>
+							<span class="repo-badge topic">web</span>
+							<span class="repo-badge topic">timer</span>
+							<span class="repo-badge topic">fitness</span>
+						</div>
+					</div>
+				</article>
+			</div>
+		</section>
+
+		<section class="section blogs-section">
+			<h2 class="section-title">Blogs</h2>
+			<div class="blogs-list">
+				<article class="blog-item">
+					<a href="/blogs/run-void-on-termux.html" class="blog-link">
+						<div class="blog-item-content">
+							<h3 class="blog-title">How to run voidlinux on termux using chroot</h3>
+							<p class="blog-meta">
+								<span class="blog-tag">Linux</span>
+								<span class="blog-tag">Termux</span>
+								<span class="blog-date">June 2026</span>
+							</p>
+						</div>
+						<div class="blog-arrow">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<line x1="5" y1="12" x2="19" y2="12"></line>
+								<polyline points="12 5 19 12 12 19"></polyline>
+							</svg>
+						</div>
+					</a>
+				</article>
+
+				<article class="blog-item draft">
+					<div class="blog-link-disabled">
+						<div class="blog-item-content">
+							<h3 class="blog-title">Running Determinate Nix on termux chroot</h3>
+							<p class="blog-meta">
+								<span class="blog-tag">Nix</span>
+								<span class="blog-tag">Termux</span>
+								<span class="blog-badge-status">In Progress</span>
+							</p>
+						</div>
+					</div>
+				</article>
+			</div>
+		</section>
 	</main>
 
-	<h1>Projects</h1>
-	<div class="projects-grid">
-		<div class="project-card" data-repo="mrndstvndv/Search">
-			<div class="card-screenshot">
-				<img src="assets/search_app.png" alt="Search Android App Mockup" loading="lazy" />
-			</div>
-			<div class="card-body">
-				<h3><a href="https://github.com/mrndstvndv/Search">OmniPrompt</a></h3>
-				<p class="card-desc">Android command palette that unifies app launching, device search, and system utilities into a single, customizable overlay.</p>
-				<div class="repo-meta">
-					<span class="repo-badge"></span>
-					<span class="repo-badge lang">Kotlin</span>
-					<span class="repo-badge topic">android</span>
-					<span class="repo-badge topic">search</span>
-					<span class="repo-badge topic">command-palette</span>
-				</div>
-			</div>
-		</div>
-		<div class="project-card" data-repo="mrndstvndv/termux-ghostty">
-			<div class="card-body">
-				<h3><a href="https://github.com/mrndstvndv/termux-ghostty">termux-ghostty</a></h3>
-				<p class="card-desc">An experimental Android terminal app combining features from Termux and Ghostty.</p>
-				<div class="repo-meta">
-					<span class="repo-badge"></span>
-					<span class="repo-badge lang">Zig</span>
-					<span class="repo-badge topic">android</span>
-					<span class="repo-badge topic">terminal</span>
-					<span class="repo-badge topic">ghostty</span>
-				</div>
-			</div>
-		</div>
-		<div class="project-card" data-repo="mrndstvndv/font-mod">
-			<div class="card-body">
-				<h3><a href="https://mrndstvndv.github.io/font-mod/">Magisk Font Maker</a></h3>
-				<p class="card-desc">Create magisk module to override system fonts with your own custom one.</p>
-				<div class="repo-meta">
-					<span class="repo-badge"></span>
-					<span class="repo-badge lang">Shell</span>
-					<span class="repo-badge topic">android</span>
-					<span class="repo-badge topic">magisk</span>
-					<span class="repo-badge topic">font</span>
-				</div>
-			</div>
-		</div>
-		<div class="project-card" data-repo="mrndstvndv/runpulse">
-			<div class="card-body">
-				<h3><a href="https://mrndstvndv.github.io/runpulse/">Runpulse</a></h3>
-				<p class="card-desc">Simple interval timer for my jogs</p>
-				<div class="repo-meta">
-					<span class="repo-badge"></span>
-					<span class="repo-badge lang">JavaScript</span>
-					<span class="repo-badge topic">web</span>
-					<span class="repo-badge topic">timer</span>
-					<span class="repo-badge topic">fitness</span>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<h1>Blogs</h1>
-	<ul>
-		<li><a href="/blogs/run-void-on-termux.html">How to run voidlinux on termux using chroot</a></li>
-		<li>Running Determinate Nix on termux chroot.</li>
-	</ul>
+	<footer class="footer">
+		<p>&copy; 2026 Steven Dave T. Miranda. All rights reserved.</p>
+		<p class="footer-sub">Built with Bun & Shiki. Hosted on GitHub Pages.</p>
+	</footer>
 
 	<script src="index.js"></script>
 </body>
