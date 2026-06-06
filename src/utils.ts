@@ -21,7 +21,9 @@ export const docWrapper = (title: string, body: string) => `<!doctype html>
     </div>
   </a>
 </header>
-${body}
+<main class="blog-content">
+  ${body}
+</main>
 </body>
 </html>`;
 
