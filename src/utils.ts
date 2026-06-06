@@ -2,7 +2,7 @@ import { loadWasm, createOnigurumaEngine } from '@shikijs/engine-oniguruma';
 import wasm from 'shiki/wasm';
 import { createHighlighter, type Highlighter } from 'shiki';
 
-export const docWrapper = (title: string, body: string) => `<!doctype html>
+export const docWrapper = (title: string, body: string, toc: string = '') => `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -21,6 +21,7 @@ export const docWrapper = (title: string, body: string) => `<!doctype html>
     </div>
   </a>
 </header>
+${toc}
 <main class="blog-content">
   ${body}
 </main>
@@ -93,5 +94,5 @@ export const renderMarkdown = (markdown: string, highlighter: Highlighter) => {
 
 	const tocHtml = toc.length > 1 ? buildTocNav(toc) : '';
 
-	return tocHtml + html;
+	return { tocHtml, html };
 };

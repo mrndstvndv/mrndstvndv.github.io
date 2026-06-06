@@ -28,8 +28,9 @@ for (const entry of await readdir('./blogs')) {
 	const slug = entry.slice(0, -3);
 	const md = await Bun.file(`./blogs/${entry}`).text();
 	const title = md.split('\n')[0]?.replace(/^#+\s*/, '') ?? slug;
+	const { tocHtml, html } = renderMarkdown(md, highlighter);
 	await write(
 		`./dist/blogs/${slug}.html`,
-		docWrapper(title, renderMarkdown(md, highlighter)),
+		docWrapper(title, html, tocHtml),
 	);
 }
