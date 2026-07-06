@@ -12,6 +12,9 @@ await build({
 // Copy root index.html
 await write('./dist/index.html', Bun.file('./index.html'));
 
+// Copy CNAME file for custom domain
+await write('./dist/CNAME', Bun.file('./CNAME'));
+
 // Copy static assets
 await mkdir('./dist/assets', { recursive: true });
 for (const asset of await readdir('./assets')) {
